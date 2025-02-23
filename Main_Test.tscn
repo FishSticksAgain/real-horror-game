@@ -1,3 +1,53 @@
-[gd_scene format=3 uid="uid://b7hxls62cyjn5"]
+[gd_scene load_steps=10 format=3 uid="uid://b7hxls62cyjn5"]
+
+[ext_resource type="Texture2D" uid="uid://cj7ng5pex4aul" path="res://Grids/Dark/texture_04.png" id="1_o7ht2"]
+[ext_resource type="PackedScene" uid="uid://b3wrwcjrsixov" path="res://Player.tscn" id="2_k66ru"]
+[ext_resource type="Environment" uid="uid://dk63ttfsej5d" path="res://env.tres" id="3_04s4c"]
+[ext_resource type="Texture2D" uid="uid://bhtkygibdhd5k" path="res://Grids/Orange/texture_01.png" id="4_wul6t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w35jj"]
+albedo_texture = ExtResource("1_o7ht2")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0lyrf"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_w4t55"]
+dof_blur_far_enabled = true
+dof_blur_near_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjqi6"]
+albedo_texture = ExtResource("4_wul6t")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3tied"]
+size = Vector3(10, 10, 1)
 
 [node name="Node3D" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_w35jj")
+size = Vector3(1000, 1, 1000)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_0lyrf")
+
+[node name="Player" parent="." instance=ExtResource("2_k66ru")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.178617, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_04s4c")
+camera_attributes = SubResource("CameraAttributesPractical_w4t55")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.751146, 5)
+material_override = SubResource("StandardMaterial3D_fjqi6")
+size = Vector3(10, 10, 1)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D2/StaticBody3D"]
+shape = SubResource("BoxShape3D_3tied")
